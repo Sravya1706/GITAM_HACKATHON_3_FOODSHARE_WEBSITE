@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Banner with Images</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow-y: scroll;
+        }
+
+        .bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.compassion.com/multimedia/hunger-in-asia.jpg') no-repeat center center/cover;
+            filter: blur(8px);
+            -webkit-filter: blur(8px);
+            z-index: -1;
+        }
+
+        .content {
+            position: relative;
+            width: 80%;
+            margin: 0 auto;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .banner {
+            background-color: blue;
+            color: white;
+            padding: 50px 10px;
+            text-align: center;
+            border-radius: 5px;
+            animation: unrollBanner 3s forwards;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .banner h1 {
+            margin: 0;
+            font-size: 2.5em;
+            width: 100%;
+        }
+
+        @keyframes unrollBanner {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        .images-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .image-frame {
+            position: relative;
+            width: 40%;
+            margin: 20px 0;
+            animation: rotateIn 1s forwards;
+            opacity: 0;
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes rotateIn {
+            from {
+                transform: rotate(-360deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotate(0);
+                opacity: 1;
+            }
+        }
+
+        .button {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: yellow;
+            color: black;
+            padding: 20px;
+            border: none;
+            border-radius: 50%;
+            font-size: 1em;
+            cursor: pointer;
+            z-index: 2;
+            text-align: center;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .canva-montage {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-top: 56.2225%;
+            padding-bottom: 0;
+            box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);
+            margin-top: 1.6em;
+            margin-bottom: 0.9em;
+            overflow: hidden;
+            border-radius: 8px;
+            will-change: transform;
+        }
+
+        .canva-montage iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .form-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 400px;
+            background: blue;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16);
+            margin: 0 auto; /* Center the form container */
+        }
+
+        .form-container.active {
+            display: flex;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-container form {
+            width: 100%;
+            background: transparent; /* Make form transparent */
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+            display: none;
+        }
+
+        .form-container form.active {
+            display: block;
+        }
+
+        .form-container label {
+            display: block; /* Ensure labels take up full width */
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .form-container input,
+        .form-container textarea {
+            width: 90%; /* Make the input fields a little smaller */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.8); /* Slightly transparent input background */
+        }
+
+        .form-container button {
+            background-color: white; /* Change button background color to white */
+            color: blue; /* Change button text color to blue */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: lightgray; /* Change button background color on hover */
+        }
+
+        .footer {
+            width: 100%;
+            background-color: blue;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            box-sizing: border-box;
+            display: none; /* Initially hidden */
+        }
+
+        .footer a {
+            color: yellow;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Chatbot styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .chatbot-header {
+            background: blue;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header span {
+            font-size: 1.2em;
+        }
+
+        .chatbot-body {
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+        }
+
+        .chatbot-body.active {
+            display: flex;
+        }
+
+        .chatbot-input {
+            margin-top: 10px;
+            display: flex;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .chatbot-input button {
+            padding: 10px;
+            background: blue;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="content">
+        <div class="banner">
+            <h1>Stop Hunger, Start SHARING.</h1>
+        </div>
+        <div class="images-container">
+            <div class="image-frame image1">
+                <img src="https://annamrita.org/wp-content/uploads/2023/02/Everything-you-need-to-know-about-the-functions-of-a-food-NGO.jpg" alt="Image 1">
+            </div>
+            <div class="image-frame image2">
+                <img src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202106/IMG-20210615-WA0012_1200x768.jpeg?size=690:388" alt="Image 2">
+            </div>
+            <div class="image-frame image3">
+                <img src="https://assets.thehansindia.com/h-upload/2020/12/19/1019356-donation.webp" alt="Image 3">
+            </div>
+            <div class="image-frame image4">
+                <img src="https://algomas.com.au/wp-content/uploads/2021/06/FFW-logo.jpg" alt="Image 4">
+            </div>
+        </div>
+        <button class="button" onclick="showMontage()">Be the good you<br>believe in</button>
+        
+        <div class="canva-montage hidden" id="canva-montage">
+            <iframe loading="lazy"
+                src="https://www.canva.com/design/DAGG9v_2rx8/1RooSq0Mm4k9sMGCB61CbA/view?embed"
+                allowfullscreen="allowfullscreen" allow="fullscreen">
+            </iframe>
+        </div>
+        
+
+        <div class="form-container hidden">
+            <h2>BE A KIND HEART:</h2>
+            <div>
+                <label>
+                    <input type="radio" name="action" value="register" onclick="toggleForm('register')"> Register for Donation
+                </label>
+                <label>
+                    <input type="radio" name="action" value="request" onclick="toggleForm('request')"> Request for Donation
+                </label>
+            </div>
+            <form id="register-form" class="form" onsubmit="submitForm(event)">
+                <label for="quantity">Quantity of Food (in small text serves number of people):</label>
+                <input type="number" id="quantity" name="quantity">
+        
+                <label for="location">Location and Time for Pickup:</label>
+                <input type="text" id="location" name="location">
+        
+                <label for="poc">Instore POC:</label>
+                <input type="text" id="poc" name="poc">
+        
+                <button type="submit">Submit</button>
+            </form>
+        
+            <form id="request-form" class="form" onsubmit="submitForm(event)">
+                <label for="req-quantity">Quantity of Food Required:</label>
+                <input type="number" id="req-quantity" name="req-quantity">
+        
+                <label for="req-location">Location of NGO:</label>
+                <input type="text" id="req-location" name="req-location">
+        
+                <label for="req-poc">Local NGO POC:</label>
+                <input type="text" id="req-poc" name="req-poc">
+        
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        
+        <div class="footer">
+            For further information, contact us at 9502593911 or email at <a href="mailto:seeva@gitam.in">seeva@gitam.in</a>. <br>
+            <a href="https://forms.gle/your-google-form-link">Give us your feedback</a>
+    </div>
+        
+
+    <div class="chatbot-container">
+        <div class="chatbot-header" onclick="toggleChatbot()">
+            <span>Chat with us</span>
+            <span>&#9650;</span>
+        </div>
+        <div class="chatbot-body">
+            <div class="chatbot-messages">
+                <p>Hello! How can we assist you today?</p>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" placeholder="Type your message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function toggleChatbot() {
+            const chatbotBody = document.querySelector('.chatbot-body');
+            chatbotBody.classList.toggle('active');
+            const chatbotHeader = document.querySelector('.chatbot-header span:last-child');
+            chatbotHeader.innerHTML = chatbotBody.classList.contains('active') ? '&#9660;' : '&#9650;';
+        }
+    
+        async function sendMessage() {
+            const input = document.querySelector('.chatbot-input input');
+            const message = input.value.trim();
+            if (message) {
+                const messagesContainer = document.querySelector('.chatbot-messages');
+    
+                // Display user message
+                const userMessage = document.createElement('p');
+                userMessage.textContent = "You: " + message;
+                userMessage.classList.add('user-message');
+                messagesContainer.appendChild(userMessage);
+    
+                // Clear input
+                input.value = '';
+    
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    
+                // Send message to Cohere API and get response
+                const response = await getChatbotResponse(message);
+    
+                // Display chatbot response
+                const botMessage = document.createElement('p');
+                botMessage.textContent = "Bot: " + response;
+                botMessage.classList.add('bot-message');
+                messagesContainer.appendChild(botMessage);
+    
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+    
+        async function getChatbotResponse(message) {
+            const apiKey = 'a6GKtiR2ODwCwaRoczh0Z4RmZZIcNgEBrrBSfKuI'; // Cohere API key
+            const endpoint = 'https://api.cohere.ai/v1/generate'; // Cohere API endpoint
+    
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            };
+    
+            const faqData = JSON.parse(`{
+                "project_title": "FoodShare: A Smart Solution to Minimize Food Waste and Combat Hunger in India",
+                "problem_statement": "India, with a population of approximately 141 crore, faces the enormous challenge of feeding its citizens daily. Despite the tireless efforts of farmers who produce vast quantities of food, a significant portion of this food goes to waste. This food wastage is a major problem in India, exacerbating hunger and leading to environmental damage as food decomposes in landfills. To address this pressing issue, we need an innovative system that can efficiently report surplus food to the nearest food non-profit organizations. This solution will ensure that edible leftovers are redirected to those in need rather than being wasted, thereby reducing food waste and hunger simultaneously.",
+                "questions_responses": [
+                    {
+                        "question": "What is the main objective of the 'FoodShare' project?",
+                        "response": "The main objective of the 'FoodShare' project is to minimize food waste and combat hunger in India by efficiently reporting surplus food to the nearest food non-profit organizations, ensuring that edible leftovers are redirected to those in need."
+                    },
+                    {
+                        "question": "How does 'FoodShare' help in reducing food wastage?",
+                        "response": "'FoodShare' helps in reducing food wastage by providing a system that allows users to report surplus food, which is then collected by nearby food non-profits to be distributed to the hungry, instead of being wasted."
+                    },
+                    {
+                        "question": "Who can benefit from the 'FoodShare' system?",
+                        "response": "Both individuals with surplus food and those in need of food can benefit from the 'FoodShare' system. It connects food donors with food non-profits that distribute the food to the hungry."
+                    },
+                    {
+                        "question": "What are the environmental benefits of implementing 'FoodShare'?",
+                        "response": "The environmental benefits of implementing 'FoodShare' include reducing the amount of food waste that decomposes in landfills, thereby decreasing greenhouse gas emissions and environmental damage."
+                    },
+                    {
+                        "question": "How does 'FoodShare' contribute to solving hunger in India?",
+                        "response": "'FoodShare' contributes to solving hunger in India by ensuring that surplus, edible food reaches food non-profits quickly and efficiently, allowing them to feed those who are hungry and in need."
+                    },
+                    {
+                        "question": "How can users report surplus food using 'FoodShare'?",
+                        "response": "Users can report surplus food using the 'FoodShare' app or website by providing details about the food and its location. The system then notifies the nearest food non-profit organization for collection."
+                    },
+                    {
+                        "question": "What challenges does 'FoodShare' aim to address?",
+                        "response": "'FoodShare' aims to address the challenges of food wastage and hunger in India by creating a streamlined system for reporting and redistributing surplus food to those in need."
+                    },
+                    {
+                        "question": "Why is reducing food wastage important for India?",
+                        "response": "Reducing food wastage is important for India because it helps to alleviate hunger, reduces environmental impact, and ensures that the efforts of farmers and food producers are not in vain."
+                    },
+                    {
+                        "question": "What makes 'FoodShare' an innovative solution?",
+                        "response": "'FoodShare' is an innovative solution because it leverages technology to create a network that connects surplus food providers with food non-profits, making the redistribution process efficient and effective."
+                    },
+                    {
+                        "question": "What role do food non-profit organizations play in the 'FoodShare' system?",
+                        "response": "Food non-profit organizations play a crucial role in the 'FoodShare' system by collecting reported surplus food and distributing it to those in need, thereby reducing food waste and combating hunger."
+                    },
+                    {
+                        "question": "Who created 'FoodShare'?",
+                        "response": "'FoodShare' was created by a team of dedicated individuals aiming to tackle food wastage and hunger in India."
+                    },
+                    {
+                        "question": "Who are the team members of 'FoodShare'?",
+                        "response": "The team members of 'FoodShare' are Kamuju Vinay, Patham Sravya, Roshan Kumar Potharaj, Bhavika Vunnam, and V. Vinay."
+                    },
+                    {
+                        "question": "How can I contact the 'FoodShare' team?",
+                        "response": "You can contact the 'FoodShare' team at the phone number 9346719273."
+                    }
+                ]
+            }`);
+    
+            const prompt = faqData.questions_responses.map(item => `Q: ${item.question}\nA: ${item.response}`).join('\n\n') + `\n\nUser: ${message}\nBot:`;
+    
+            const body = {
+                model: 'command-xlarge-nightly',
+                prompt: prompt,
+                max_tokens: 150,
+                temperature: 0.7,
+                stop_sequences: ["User:"]
+            };
+    
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(body)
+                });
+    
+                const data = await response.json();
+                return data.generations[0].text.trim();
+            } catch (error) {
+                console.error('Error:', error);
+                return "Sorry, I couldn't understand that. Could you please rephrase?";
+            }
+        }
+    </script>
+    
+    </body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="bg" id="bgImage"></div>
+    <div class="content">
+        <div class="tagline" id="tagline">Stop Hunger, Start SHARING.</div>
+        <div class="form-container" id="mainForm">
+            <div class="buttons">
+                <button onclick="showForm('loginForm')">Log In</button>
+                <button onclick="showForm('registerForm')">Register/Sign Up</button>
+            </div>
+        </div>
+
+        <div class="form-container" id="loginForm">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" oninput="checkLoginForm()">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" oninput="checkLoginForm()">
+            </div>
+            <div class="buttons">
+                <button id="loginSubmit" onclick="loginAndShowMore()" disabled>Submit</button>
+                <button onclick="showForm('mainForm')">Back</button>
+            </div>
+        </div>
+
+        <div class="form-container" id="registerForm">
+            <h2>Register</h2>
+            <small style="color: yellow;">(Please fill in all the fields in order to submit.)</small>
+            <form action="register.php" method="post">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" oninput="checkRegisterForm()">
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" oninput="checkRegisterForm()">
+                </div>
+                <div class="form-group">
+                    <label for="passwordReg">Password:</label>
+                    <input type="password" id="passwordReg" name="password" oninput="checkPassword()">
+                    <small style="color: red;">(Password must contain at least one uppercase letter and one special character.)</small>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" oninput="checkPassword()">
+                </div>
+                <div class="form-group">
+                    <label>Registering As:</label>
+                    <input type="radio" id="business" name="type" value="business" onclick="showExtraFields('business')" oninput="checkRegisterForm()"> Food Business
+                    <input type="radio" id="ngo" name="type" value="ngo" onclick="showExtraFields('ngo')" oninput="checkRegisterForm()"> NGO Organisation
+                </div>
+
+                <div id="businessFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="businessName">Business Name:</label>
+                        <input type="text" id="businessName" name="businessName" oninput="checkRegisterForm()">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" id="location" name="location" oninput="checkRegisterForm()">
+                    </div>
+                    <div class="form-group">
+                        <label for="registerNumber">Registration Number:</label>
+                        <input type="text" id="registerNumber" name="registerNumber" oninput="checkRegisterForm()">
+                    </div>
+                </div>
+
+                <div id="ngoFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="ngoName">NGO Name:</label>
+                        <input type="text" id="ngoName" name="ngoName" oninput="checkRegisterForm()">
+                    </div>
+                    <div class="form-group">
+                        <label for="ngoLocation">Location:</label>
+                        <input type="text" id="ngoLocation" name="ngoLocation" oninput="checkRegisterForm()">
+                    </div>
+                    <div class="form-group">
+                        <label for="ngoRegNumber">Registration Number:</label>
+                        <input type="text" id="ngoRegNumber" name="ngoRegNumber" oninput="checkRegisterForm()">
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button type="button" id="registerSubmit" onclick="register()" disabled>Submit</button>
+                    <button type="button" onclick="showForm('mainForm')">Back</button>
+                </div>
+            </form>
+        </div>
+        <div class="form-container" id="indiaMap" style="display: none;">
+             <h2>Welcome! Here is the Map of India</h2>
+              <img src="https://www.seekpng.com/png/full/256-2568434_5-00-000-unique-trucks-and-growing-india.png" alt="India Map">
+              <div class="buttons">
+                       <button id="backToLoginButton" onclick="showForm('loginForm')">Back to Login</button>
+              </div>
+        </div>
+
+        <div class="form-container" id="moreAboutUs" style="display: none;">
+            <h2>More About Us</h2>
+             <p>Welcome to the forefront of change in India's fight against food waste and hunger! With a population of approximately 1.41 billion, our nation is rich in resources yet faces the daunting challenge of feeding all its citizens daily. Despite the dedicated efforts of our hardworking farmers, a significant amount of food goes to waste, exacerbating hunger and environmental degradation.</p>
+
+             <p>But there's hope on the horizon! Introducing an innovative solution that promises to revolutionize the way surplus food is managed. Our cutting-edge system is designed to efficiently report surplus food to the nearest food non-profit organizations, ensuring that edible leftovers are redirected to those in need rather than ending up in landfills.</p>
+
+             <p>By harnessing the power of technology and community collaboration, we can significantly reduce food waste while simultaneously alleviating hunger in our communities. Together, let's embrace this transformative solution and pave the way for a brighter, more sustainable future for all. Join us in the movement to combat food waste and hunger – together, we can make a real difference!</p>
+
+             <div class="buttons">
+                 <button onclick="goToNextPage()">Next</button>
+             </div>
+        </div>
+
+
+        
+    <script src="scripts.js"></script>
+</body>
+
+</html>
